@@ -40,11 +40,28 @@ public class Basket {
     }
 
     static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
 
+        String products[];
+        int[] prices;
+        int[] cartBasket = new int[0];
+        
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            StringBuilder s = new StringBuilder();
             Basket basket = new Basket();
-            basket = (StringBuilder) ois.readObject();
+            s = (StringBuilder) ois.readObject();
+/*
+            
+            int c = 0;
+            while ((c = file.read()) != -1) {
+                s.append(Character.toChars(c));
+            }*/
+            String[] k = s.toString().split(" ");
+
+            for (int i = 0; i < k.length; i++) {
+                cartBasket[i] = Integer.parseInt(k[i*2+1]);
+            }
             return basket;
+
         }
     }
 }
