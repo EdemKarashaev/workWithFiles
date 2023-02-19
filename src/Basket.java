@@ -1,16 +1,13 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
 
-public class Basket {
-    String products[];
-    int[] prices;
-    int[] cartBasket;
-
+public class Basket implements Serializable {
+    private static String[] products;
+    static int[] prices;
+    private static int[] cartBasket;
+    
     Basket() {
-
     }
-
 
     Basket(String[] products, int[] prices) {
         this.products = products;
@@ -22,11 +19,8 @@ public class Basket {
     }
 
     public void addToCart(int productNum, int amount) {
-
         cartBasket[productNum - 1] += amount;
-
     }
-
 
     public void printCart() {
         System.out.println("В продуктовой корзине: ");
@@ -37,25 +31,34 @@ public class Basket {
         }
     }
 
-    public void saveTxt(File textFile) throws IOException {
-        PrintWriter printWriter = new PrintWriter(textFile);
-        for (int i = 0; i < products.length; i++) {
-            printWriter.println(products[i] + "\t" + prices[i] + "\t" + cartBasket[i]);
-
+    public void saveTxt(File file) throws IOException {
+        try (FileWriter saveFile = new FileWriter(file)) {
+            for (int i = 0; i < products.length; i++) {
+                    saveFile.write(products[i]  +" "+ cartBasket[i]+" ");
+            }
         }
-
     }
 
-    static Basket loadFromTxtFile(File textFile) {
-        String products[] = null;
-        int[] prices = null;
-        int[] cartBasket = null;
+    public static Basket loadFromTxtFile(File file) throws IOException {
+        try (FileReader loadFile = new FileReader(file)) {
+            Basket basket = new Basket();
+            basket.products = products;
+            basket.prices = prices;
+            basket.cartBasket = new int[products.length];
 
-        Basket basket = new Basket();
-        basket.products = products;
-        basket.prices = prices;
-        basket.cartBasket = cartBasket;
+            StringBuilder s = new StringBuilder();
+            int c = 0;
+            while ((c = loadFile.read()) != -1) {
+                s.append(Character.toChars(c));
+            }
+            String[] k = s.toString().split(" ");
 
-        return basket;
-    }
+            for (int i = 0; i < k.length; i++) {
+                cartBasket[i] = Integer.parseInt(k[i*2+1]);
+            }
+            return basket;
+        }
+   }
 }
+
+
