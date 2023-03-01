@@ -1,5 +1,6 @@
+package main.java;
+
 import java.io.*;
-import java.util.ArrayList;
 
 public class Basket implements Serializable {
     private static String[] products;
@@ -9,7 +10,7 @@ public class Basket implements Serializable {
     Basket() {
     }
 
-    Basket(String[] products, int[] prices) {
+    public Basket(String[] products, int[] prices) {
         this.products = products;
         this.prices = prices;
         this.cartBasket = new int[products.length];
@@ -41,10 +42,6 @@ public class Basket implements Serializable {
 
     public static Basket loadFromTxtFile(File file) throws IOException {
         try (FileReader loadFile = new FileReader(file)) {
-            Basket basket = new Basket();
-            basket.products = products;
-            basket.prices = prices;
-
 
             StringBuilder s = new StringBuilder();
             int c = 0;
@@ -52,11 +49,15 @@ public class Basket implements Serializable {
                 s.append(Character.toChars(c));
             }
             String[] k = s.toString().split(" ");
+            Basket basket = new Basket();
+            products = products;
+            prices = prices;
+            cartBasket = new int[k.length/2];
 
-            basket.cartBasket = new int[products.length];
-            for (int i = 0; i < k.length; i++) {
+            for (int i = 0; i < k.length/2; i++) {
                 cartBasket[i] = Integer.parseInt(k[i*2+1]);
             }
+
             return basket;
         }
    }
