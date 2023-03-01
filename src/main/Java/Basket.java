@@ -33,8 +33,9 @@ public class Basket {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             StringBuilder s = new StringBuilder();
             for (int i = 0; i < products.length; i++) {
-                s.append(products[i] + "  " + cartBasket[i]);
+                s.append(products[i] + "  " + cartBasket[i]+" ");
                 oos.writeObject(s);
+
             }
         }
     }
@@ -58,7 +59,7 @@ public class Basket {
             prices = prices;
            cartBasket = new int[k.length/2];
             
-            for (int i = 0; i < k.length; i++) {
+            for (int i = 0; i < k.length/2; i++) {
                 cartBasket[i] = Integer.parseInt(k[i*2+1]);
             }
             return basket;
