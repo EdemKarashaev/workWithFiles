@@ -9,7 +9,7 @@ public class Main {
 
         try {
             Basket basket1 = Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
-        } finally {
+              } finally {
             Basket basket = new Basket(products, prices);
 
             System.out.println("список возможных товаров за килограмм, литр, штуку:");

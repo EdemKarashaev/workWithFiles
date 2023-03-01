@@ -44,7 +44,7 @@ public class Basket implements Serializable {
             Basket basket = new Basket();
             basket.products = products;
             basket.prices = prices;
-            basket.cartBasket = new int[products.length];
+
 
             StringBuilder s = new StringBuilder();
             int c = 0;
@@ -53,6 +53,7 @@ public class Basket implements Serializable {
             }
             String[] k = s.toString().split(" ");
 
+            basket.cartBasket = new int[products.length];
             for (int i = 0; i < k.length; i++) {
                 cartBasket[i] = Integer.parseInt(k[i*2+1]);
             }
