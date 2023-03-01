@@ -20,7 +20,9 @@ public class Main {
             }
 
             basket.addToCart(3, 12);
+            basket.addToCart(1, 8);
             basket.addToCart(2, 10);
+            basket.addToCart(2, 2);
             basket.printCart();
             basket.saveTxt(new File("BasketAmounts.txt"));
         }
