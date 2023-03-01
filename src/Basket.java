@@ -5,7 +5,7 @@ public class Basket implements Serializable {
     private static String[] products;
     static int[] prices;
     private static int[] cartBasket;
-    
+
     Basket() {
     }
 
@@ -34,7 +34,7 @@ public class Basket implements Serializable {
     public void saveTxt(File file) throws IOException {
         try (FileWriter saveFile = new FileWriter(file)) {
             for (int i = 0; i < products.length; i++) {
-                    saveFile.write(products[i]  +" "+ cartBasket[i]+" ");
+                saveFile.write(products[i] + " " + cartBasket[i] + " ");
             }
         }
     }
@@ -55,11 +55,11 @@ public class Basket implements Serializable {
 
             basket.cartBasket = new int[products.length];
             for (int i = 0; i < k.length; i++) {
-                cartBasket[i] = Integer.parseInt(k[i*2+1]);
+                cartBasket[i] = Integer.parseInt(k[i * 2 + 1]);
             }
             return basket;
         }
-   }
+    }
 }
 
 
