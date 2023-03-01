@@ -54,9 +54,9 @@ public class Basket {
             }*/
             String[] k = s.toString().split(" ");
             Basket basket = new Basket();
-            basket.products = products;
-            basket.prices = prices;
-            basket.cartBasket = new int[k.length];
+            products = products;
+            prices = prices;
+           cartBasket = new int[k.length/2];
             
             for (int i = 0; i < k.length; i++) {
                 cartBasket[i] = Integer.parseInt(k[i*2+1]);
