@@ -33,7 +33,7 @@ public class Basket {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             StringBuilder s = new StringBuilder();
             for (int i = 0; i < products.length; i++) {
-                s.append(products[i] + "  " + cartBasket[i]+" ");
+                s.append(products[i] + " " + cartBasket[i]+" ");
                 oos.writeObject(s);
 
             }
@@ -42,14 +42,12 @@ public class Basket {
 
     static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
 
-
-        
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             StringBuilder s = new StringBuilder();
             s = (StringBuilder) ois.readObject();
 
-/*
-            int c = 0;
+
+          /*  int c = 0;
             while ((c = file.read()) != -1) {
                 s.append(Character.toChars(c));
             }*/
