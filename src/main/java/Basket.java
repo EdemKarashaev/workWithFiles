@@ -1,11 +1,11 @@
-package main.java;
+
 
 import java.io.*;
 
 public class Basket implements Serializable {
-    private static String[] products;
-    static int[] prices;
-    private static int[] cartBasket;
+     String[] products;
+     int[] prices;
+     int[] cartBasket;
 
     Basket() {
     }
@@ -13,7 +13,7 @@ public class Basket implements Serializable {
     public Basket(String[] products, int[] prices) {
         this.products = products;
         this.prices = prices;
-        this.cartBasket = new int[products.length];
+        this.cartBasket = new int[prices.length];
         for (int i = 0; i < products.length; i++) {
             cartBasket[i] = 0;
         }
@@ -42,7 +42,6 @@ public class Basket implements Serializable {
 
     public static Basket loadFromTxtFile(File file) throws IOException {
         try (FileReader loadFile = new FileReader(file)) {
-
             StringBuilder s = new StringBuilder();
             int c = 0;
             while ((c = loadFile.read()) != -1) {
@@ -57,7 +56,6 @@ public class Basket implements Serializable {
             for (int i = 0; i < k.length/2; i++) {
                 cartBasket[i] = Integer.parseInt(k[i*2+1]);
             }
-
             return basket;
         }
     }
