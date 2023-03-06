@@ -10,7 +10,7 @@ public class Main {
         int[] prices = {58, 45, 98, 76};
 
         try {
-            Basket basket1 = Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
+            Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
               } finally {
             Basket basket = new Basket(products, prices);
 
