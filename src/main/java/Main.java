@@ -63,10 +63,10 @@ public class Main {
         Element log = document.createElement("log");
         config.appendChild(log);
         Element enable2 = document.createElement("enable");
-        save.appendChild(enable2);
+        log.appendChild(enable2);
         enable2.setTextContent("true");
         Element fileName2 = document.createElement("fileName");
-        save.appendChild(fileName2);
+        log.appendChild(fileName2);
         fileName1.setTextContent("Client.csv");
 
         DOMSource domSource = new DOMSource(document);
@@ -79,53 +79,62 @@ public class Main {
         Node root = doc.getDocumentElement();
         NodeList con = root.getChildNodes();
         NodeList con1 = con.item(0).getChildNodes();
+        NodeList con2 = con.item(1).getChildNodes();
+        NodeList con3 = con.item(2).getChildNodes();
+        String name = (con1.item(1).getTextContent());
+        String name1 = (con3.item(1).getTextContent());
 
-        if (con1.item(0).getTextContent().equals("true")) {
-
-
-        }
-
-// Basket basket1 = Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
-
-
-        JSONParser parser = new JSONParser();
-        try {
-            Object obj = parser.parse(new FileReader("Basket.json"));
-            JSONObject basketJSON = (JSONObject) obj;
-            int[] v = new int[products.length];
+        if (con1.item(1).getTextContent().equals("txt")) {
+            Basket basket1 = Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
+        } else {
+            if (con1.item(0).getTextContent().equals("true")) {
+                JSONParser parser = new JSONParser();
+                try {
+                    Object obj = parser.parse(new FileReader(name));
+                    JSONObject basketJSON = (JSONObject) obj;
+                    int[] v = new int[products.length];
        /*     for (Object key: basketJSON.keySet()) {
                 v = (int[]) key;
             }*/
-            Basket basket = new Basket(products, prices, v) {
-            };
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } finally {
-            Basket basket = new Basket(products, prices);
-            System.out.println("список возможных товаров за килограмм, литр, штуку:");
-            for (int i = 0; i < products.length; i++) {
-                System.out.println(i + 1 + "  " + products[i] + " по цене  " + prices[i] + "  за килограмм, литр, штуку");
-            }
-            ClientLog cl = new ClientLog();
-            basket.addToCart(3, 12);
-            basket.addToCart(1, 8);
-            basket.addToCart(2, 12);
-            cl.log(3, 12);
-            cl.log(1, 8);
-            cl.log(2, 12);
-            basket.printCart();
-            //basket.saveTxt(new File("BasketAmounts.txt"));
-            cl.exportAsCSV(new File("log.csv"));
+                    Basket basket = new Basket(products, prices, v) {
+                    };
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                {
+                    Basket basket = new Basket(products, prices);
+                    System.out.println("список возможных товаров за килограмм, литр, штуку:");
+                    for (int i = 0; i < products.length; i++) {
+                        System.out.println(i + 1 + "  " + products[i] + " по цене  " + prices[i] + "  за килограмм, литр, штуку");
+                    }
+                    ClientLog cl = new ClientLog();
+                    basket.addToCart(3, 12);
+                    basket.addToCart(1, 8);
+                    basket.addToCart(2, 12);
+                    cl.log(3, 12);
+                    cl.log(1, 8);
+                    cl.log(2, 12);
+                    basket.printCart();
 
-            JSONObject basketJSON = new JSONObject();
-            for (int i = 0; i < products.length; i++) {
-                basketJSON.put(products[i], basket.cartBasket[i]);
-            }
-            try (FileWriter writer = new FileWriter("Basket.json")) {
-                writer.write(basketJSON.toString());
-                writer.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    if (con2.item(0).getChildNodes().equals("txt")) {
+                        basket.saveTxt(new File("BasketAmounts.txt"));
+                    } else {
+                        JSONObject basketJSON = new JSONObject();
+                        for (int i = 0; i < products.length; i++) {
+                            basketJSON.put(products[i], basket.cartBasket[i]);
+                        }
+                        try (FileWriter writer = new FileWriter("Basket.json")) {
+                            writer.write(basketJSON.toString());
+                            writer.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (con2.item(0).getChildNodes().equals("true")) {
+                        cl.exportAsCSV(new File(name1));
+                    }
+                }
             }
         }
     }
