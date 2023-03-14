@@ -47,15 +47,21 @@ public class Basket {
             s = (StringBuilder) ois.readObject();
 
             String[] k = s.toString().split(" ");
-            Basket basket = new Basket();
-            products = products;
-            prices = prices;
-           cartBasket = new int[k.length/2];
-            
-            for (int i = 0; i < k.length/2; i++) {
-                cartBasket[i] = Integer.parseInt(k[i*2+1]);
+            String[] prod = new String[k.length/3];
+            int[] pr = new int[k.length/3];
+            int cart[] = new int[k.length/3];
+
+            for (int i = 0; i < k.length / 3; i++) {
+                prod[i] = (k[i * 3]);
+                pr[i] = Integer.parseInt(k[(i * 3) + 1]);
+                cart[i] = Integer.parseInt(k[(i * 3) + 2]);
             }
+
+            Basket basket = new Basket(prod, pr,cart);
             return basket;
         }
     }
 }
+
+
+
