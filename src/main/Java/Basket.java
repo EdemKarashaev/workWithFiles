@@ -4,9 +4,8 @@ public class Basket {
     public String[] products;
     public int[] prices;
     public int[] cartBasket;
+    private Object basket;
 
-    Basket() {
-    }
 
     Basket(String[] products, int[] prices) {
         this.products = products;
@@ -31,33 +30,14 @@ public class Basket {
 
     public void saveBin(File file) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            StringBuilder s = new StringBuilder();
-            for (int i = 0; i < products.length; i++) {
-                s.append(products[i] + " " + cartBasket[i]+" ");
-                oos.writeObject(s);
-
-            }
+            oos.writeObject(basket);
         }
     }
 
     static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
-
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            StringBuilder s = new StringBuilder();
-            s = (StringBuilder) ois.readObject();
-
-            String[] k = s.toString().split(" ");
-            String[] prod = new String[k.length/3];
-            int[] pr = new int[k.length/3];
-            int cart[] = new int[k.length/3];
-
-            for (int i = 0; i < k.length / 3; i++) {
-                prod[i] = (k[i * 3]);
-                pr[i] = Integer.parseInt(k[(i * 3) + 1]);
-                cart[i] = Integer.parseInt(k[(i * 3) + 2]);
-            }
-
-            Basket basket = new Basket(prod, pr,cart);
+            Basket basket;
+            basket = (Basket) ois.readObject();
             return basket;
         }
     }
