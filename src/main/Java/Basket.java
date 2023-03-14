@@ -1,9 +1,9 @@
 import java.io.*;
 
 public class Basket {
-    static String[] products;
-    static int[] prices;
-    static int[] cartBasket;
+    public String[] products;
+    public int[] prices;
+    public int[] cartBasket;
 
     Basket() {
     }
@@ -46,11 +46,6 @@ public class Basket {
             StringBuilder s = new StringBuilder();
             s = (StringBuilder) ois.readObject();
 
-
-          /*  int c = 0;
-            while ((c = file.read()) != -1) {
-                s.append(Character.toChars(c));
-            }*/
             String[] k = s.toString().split(" ");
             Basket basket = new Basket();
             products = products;
