@@ -1,6 +1,7 @@
 package main.java;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Basket implements Serializable {
     public String[] products;
@@ -14,6 +15,20 @@ public class Basket implements Serializable {
         for (int i = 0; i < products.length; i++) {
             cartBasket[i] = 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Basket other = (Basket) obj;
+        return Arrays.equals(products, other.products) &&
+                Arrays.equals(prices, other.prices) &&
+                Arrays.equals(cartBasket, other.cartBasket);
     }
 
     public Basket(String[] products, int[] prices, int[] cartBasket) {
