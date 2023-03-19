@@ -93,9 +93,9 @@ public class Main {
                     Object obj = parser.parse(new FileReader(name));
                     JSONObject basketJSON = (JSONObject) obj;
                     int[] v = new int[products.length];
-       /*     for (Object key: basketJSON.keySet()) {
-                v = (int[]) key;
-            }*/
+                    for (Object key : basketJSON.keySet()) {
+                        v = (int[]) key;
+                    }
                     Basket basket = new Basket(products, prices, v) {
                     };
                 } catch (ParseException e) {
