@@ -30,64 +30,26 @@ public class Main {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.newDocument();
-        Element config = document.createElement("Config");
-        document.appendChild(config);
 
-        Element load = document.createElement("load");
-        config.appendChild(load);
+// Путь к файлу, который нужно распарсить
+        File file = new File("Shop.xml");
+// Распарсить XML-документ
+        Document doc = builder.parse(file);
 
-        Element enable = document.createElement("enable");
-        load.appendChild(enable);
-        enable.setTextContent("false");
-        Element fileName = document.createElement("fileName");
-        load.appendChild(fileName);
-        fileName.setTextContent("Basket.json");
-        Element format = document.createElement("format");
-        load.appendChild(format);
-        format.setTextContent("json");
-
-        Element save = document.createElement("save");
-        config.appendChild(save);
-
-        Element enable1 = document.createElement("enable");
-        save.appendChild(enable1);
-        enable1.setTextContent("true");
-        Element fileName1 = document.createElement("fileName");
-        save.appendChild(fileName1);
-        fileName1.setTextContent("Basket.json");
-        Element format1 = document.createElement("format");
-        save.appendChild(format1);
-        format1.setTextContent("json");
-
-        Element log = document.createElement("log");
-        config.appendChild(log);
-        Element enable2 = document.createElement("enable");
-        log.appendChild(enable2);
-        enable2.setTextContent("true");
-        Element fileName2 = document.createElement("fileName");
-        log.appendChild(fileName2);
-        fileName1.setTextContent("Client.csv");
-
-        DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(new File("Shop.xml"));
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.transform(domSource, streamResult);
-
-        Document doc = builder.parse(new File("Shop.xml"));
         Node root = doc.getDocumentElement();
         NodeList con = root.getChildNodes();
-        NodeList con1 = con.item(0).getChildNodes();
-        NodeList con2 = con.item(1).getChildNodes();
-        NodeList con3 = con.item(2).getChildNodes();
+
+        NodeList con1 = con.item(1).getChildNodes();
+        NodeList con2 = con.item(3).getChildNodes();
+        NodeList con3 = con.item(5).getChildNodes();
+
         String name = (con1.item(1).getTextContent());
         String name1 = (con3.item(1).getTextContent());
 
         if (con1.item(1).getTextContent().equals("txt")) {
             Basket basket1 = Basket.loadFromTxtFile(new File("BasketAmounts.txt"));
         } else {
-            if (con1.item(0).getTextContent().equals("true")) {
+            if (con1.item(1).getTextContent().equals("true")) {
                 JSONParser parser = new JSONParser();
                 try {
                     Object obj = parser.parse(new FileReader(name));
@@ -117,7 +79,7 @@ public class Main {
                     cl.log(2, 12);
                     basket.printCart();
 
-                    if (con2.item(0).getChildNodes().equals("txt")) {
+                    if (con2.item(1).getChildNodes().equals("txt")) {
                         basket.saveTxt(new File("BasketAmounts.txt"));
                     } else {
                         JSONObject basketJSON = new JSONObject();
@@ -131,7 +93,7 @@ public class Main {
                             e.printStackTrace();
                         }
                     }
-                    if (con2.item(0).getChildNodes().equals("true")) {
+                    if (con2.item(1).getChildNodes().equals("true")) {
                         cl.exportAsCSV(new File(name1));
                     }
                 }
